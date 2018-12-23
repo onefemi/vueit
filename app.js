@@ -29,7 +29,6 @@ var djson = [
 function checklist (email, password) {
   var feed = ''
   // var k = djson.includes(djson)
-  // console.log(djson.email.indexOf({ password: 'avv', email: 'ddd' }))
   for (var i = 0; i < djson.length; i++) {
     if (djson[i].email === email && djson[i].password === password) {
       feed = 'found'
