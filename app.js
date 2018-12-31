@@ -3,10 +3,14 @@ const cors = require('cors')
 const bodyparser = require('body-parser')
 const morgan = require('morgan')
 const app = express()
+const fs = require('fs')
+const path = require('path')
 
 app.use(bodyparser.json())
 app.use(cors())
 app.use(morgan('combined'))
+
+var dpath = path.join(__dirname, 'fuckit.txt')
 
 var djson = [
   { password: '123',
@@ -25,6 +29,8 @@ var djson = [
     email: 'kemi@gmail.com'
   }
 ]
+
+
 
 function checklist (email, password) {
   var feed = ''
@@ -47,10 +53,19 @@ app.get('/', (req, res, next) => {
 })
 
 app.post('/register', (req, res) => {
-  var stats = checklist(req.body.email,req.body.password)
+  console.log(req.body.email, req.body.password)
+  var stats = checklist(req.body.email, req.body.password)
   if (stats === 'found') {
     res.json({ message: `welcome ${req.body.email}!` })
   } else { res.json({ message: stats }) }
+})
+
+app.post('/adduser', (req, res) => {
+  djson.push({ password: `${req.body.newpass}`, email: `${req.body.newuser}` })
+  res.json({ message: `User Added! ${req.body.newuser}!` })
+  fs.writeFile(dpath, JSON.stringify(djson), (error) => {
+    console.log(error)
+  })
 })
 
 app.listen(8083, console.log('listening to port 8083'))
