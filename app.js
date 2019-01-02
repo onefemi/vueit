@@ -10,7 +10,7 @@ app.use(bodyparser.json())
 app.use(cors())
 app.use(morgan('combined'))
 
-var dpath = path.join(__dirname, 'fuckit.txt')
+var dpath = path.join(__dirname, 'dfile.txt')
 
 var djson = [
   { password: '123',
